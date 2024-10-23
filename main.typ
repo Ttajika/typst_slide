@@ -43,6 +43,8 @@ theme: BlackBoard
 = heading 2
 
 
+
+
 headlineのレベル1のみが上のアウトラインに表示されます．
 
 #slide(title:"スライドのタイトル")[
@@ -54,13 +56,13 @@ headlineのレベル1のみが上のアウトラインに表示されます．
 ]
 
 #slide(title:"スライドのタイトル",level:2)[
-  
+
 - レベルを下げると以下の通りです．
 #theorem(label:"lab")[
 異なる定理には異なるラベルを付けてください。ラベルが同じだと同じ番号が付きます。
 ]
 ]
-@lab 次のボタンは最初のスライドへ行くボタン #button(<head>)[button]
+ 次のボタンは最初のスライドへ行くボタン #button(<head>)[button]
 
 - 現在のスライド番号は #showslidenumber()
 - ラベルを用いてスライド番号を参照可能 #showslidenumber(label:<head>)
@@ -82,8 +84,8 @@ headlineのレベル1のみが上のアウトラインに表示されます．
 ==
 
 次のようなショートカットもできます．
-#let teiri(label:label,body) = {theorem(kind:"定理",label:label)[#body]}
-#teiri(label:"ya")[定理です]
+#let 定理(label:label,body) = {theorem(kind:"定理",label:label)[#body]}
+#定理(label:"ya")[定理です]
 
 
 #metadata("sss") #label("aa")
@@ -114,7 +116,7 @@ headlineのレベル1のみが上のアウトラインに表示されます．
 $
 a x^2+2b x+c\
 
-F(x)=sum_(i =1 )^n f_i (x)
+F(x)= sum_(i =1 )^n f_i (x)
 $
 
 = code
@@ -142,14 +144,16 @@ def function(text):
 ```
 ]
 
-#slide(title:[ 図(CeTZ)])[#context[
-
-https://typst.app/universe/package/cetz/
 
 
+ #slide(title:[ 図(CeTZ)])[
 
-#let ex(it,n:1) = {}//subs(it,n) 
+// https://typst.app/universe/package/cetz/
 
+//#context subslide_c.get() //debug用
+
+
+#context[
 #columns[
 #cetz.canvas({import cetz.chart
 let data = (24, 31, 18, 21, 23, 18, 27, 17, 26, 13)
@@ -163,29 +167,33 @@ chart.piechart(
 
 //CeTZ Objectをdynamic slideにするときは次のようにする．
 // 1. contextで囲む
-// 2. subslide.update(紙芝居の数) で数を指定
-// 3. 番号を指定してfonlyで囲む. fonly((指定番号), 内容)とする．
-#subslide.update(2)
+// 2. 番号を指定してconlyで囲む. conly((指定番号), 内容)とする．
 #cetz.canvas(
 {
 import cetz.plot
 import cetz.draw: *
-fonly((0,1,2),plot.plot(size: (8,8), name: "plot",
+conly((0,1,2),
+    plot.plot(size: (8,8), name: "plot",
           x-tick-step: none, y-tick-step: none, {
-  plot.add(((0,0), (1,1), (2,.5), (4,3)))
-  plot.add-anchor("pt", (1,1))
-}))
-fonly((1,2),line("plot.pt", ((), "-|", (0,1.5)), mark: (start: ">"), name: "line"))
-fonly((2),content("line.end", [Here], anchor: "east", padding: 0))
+          plot.add(((0,0), (1,1), (2,.5), (4,3)))
+          plot.add-anchor("pt", (1,1))
+          }))
+conly((1,2),
+{line("plot.pt", ((), "-|", (0,1.5)), mark: (start: ">"), name: "line")
+line((0,0),(1,1),stroke:white+12pt)
+}
+)
+conly((2),content("line.end", [Here], anchor: "east", padding: 0))
 
 })
 
 
 
-]
-]
 
 ]
+
+
+]]
 
 
 = 参考

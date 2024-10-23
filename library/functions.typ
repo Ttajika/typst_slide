@@ -1,5 +1,5 @@
 #import "@preview/cetz:0.2.2"
-#let trans =  60%
+#import "parameter.typ":*
 
 //カラーとフォントの設定. 
 #let default_color = eastern.lighten(30%)
@@ -173,7 +173,7 @@ pad(
      let ss = ss_counter.get().at(0)
  
   align(left)[#par(first-line-indent: 0em)[
-      #rect(width: 100%, stroke: 5pt+frame_color.opacify(-ss * trans),outset: (x:0pt,y:8pt), inset: (x:10pt))[
+      #rect(width: 100%, stroke: 6pt+frame_color.opacify(-ss * trans),outset: (x:0.4pt,y:9.6pt), inset: (x:10pt))[
       #rect(width: 100%, fill: frame_color.opacify(-ss *trans), stroke: 0pt+frame_color.opacify(-ss *trans),outset:(x: 8.5pt, y: 12pt), inset: (y:-5pt))[#text(fill: emph_color.opacify(-ss *trans),weight:700)[
       #title
       ]]
@@ -338,16 +338,18 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
   
 }
 
-#let slide(title:"",body,slabel:"", level:1,color:default_color,tcolor:emph_color) ={
+#let slide(title:"",body,slabel:"", level:1,color:default_color,tcolor:emph_color, subslides:0) ={
 //slide_numberの更新
-  subslide.update(0)
+  let subslide = counter("subslide_counter")
+  let subslide_c = counter("subslide_current")
+  subslide.update(subslides)
   subslide_c.update(0)
   pause_c.update(0)
 
  if slabel == "" {heading(level:level)[#title]}
  else [#heading(level:level)[#title]; #label(slabel)]
   body
- 
+  
   context[
   #let current_subslide = 0
   #let ss = subslide.get().at(0)
@@ -365,9 +367,11 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
     heading(outlined: false, level:level)[#title]
     
     subslide_c.step()
+    
     pause_c.step()
     pause_a.update(0)
     body
+    
     current_subslide = current_subslide + 1
   }
 ]
@@ -445,44 +449,55 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
 )  
 }
 
-#let up_cur_slide(mnumber) = {
-  context{
-    let current_subslide = subslide_c.get().at(0)
-    let subslide_n = subslide.get().at(0)
-     if current_subslide == 0{
-    if subslide_n < mnumber {
-       subslide.update(mnumber)
-   }}
-  }
-}
 
 
-#let fonly(number, body, mode:none) = {
+
+#let up_cur_slide(mnumber) = {  
+ let subslide = counter("subslide_counter")
+ let subslide_n = subslide.get().at(0)
+ if subslide_n < mnumber {
+    subslide.update(mnumber)
+}}
   
+
+// subslide.update(n=>max(n,calc.max(n,mnumber)))  
+
+
+#let conly(number, body, mode:none) = {
+    if type(number) == "integer" { cetz.draw.content((0,0),context{up_cur_slide(number)  })
+    }
+    if type(number) == "array" {
+    let mnumber = {number.last()}
+    cetz.draw.content((0,0),context{up_cur_slide(mnumber) })
+    }
+    let visible =  {
     let current_subslide = subslide_c.get().at(0)
     if type(number) == "integer" {
     if current_subslide == number {
-      
-      return body
-    } else {}
+      1
+    } else {0}
     } 
     if type(number) == "array" {
+    let mnumber = {number.last()}
     let serch_num(nm) = {
       if nm == current_subslide {
         return true
       } else{return false}
     }
      if type(number.find(serch_num))== "integer" {
-      body
-    } else {return }
-     }
-     //  let mnumber = {number.last()}
-    // if current_subslide == 0{
-    // if subslide_n < mnumber {
-    //   subslide.update(mnumber)
-    // }}
+       1
+    } else {0}
+    }
+  }
+    if visible == 1 {
+      cetz.draw.content((0,0),[ ])
+       body
+    }
+     
     }
   
+    
+   
 
 
 
