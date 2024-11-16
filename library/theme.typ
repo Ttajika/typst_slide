@@ -155,13 +155,13 @@
       v(-13pt)
       }
   pad(left: -20pt, top:30pt)[
-   #h(20pt);#box(fill:gradient.linear(red, red.darken(30%), angle: 90deg),outset:(bottom:10pt, left:20pt,top:5pt), radius: (
+   #h(20pt);#box(fill:gradient.linear(red, red.darken(10%), angle: 90deg),outset:(bottom:10pt, left:20pt,top:5pt), radius: (
     left: 5pt,
     top-right: 20pt,
-  ))[#text(size:1.2em,fill:white)[#title] #hide[あ]]; #h(1fr); #text(size:0.7em,fill:black)[#now/#end]; #v(-15pt) 
+  ))[#text(size:1.2em,fill:white)[#title] #hide[あ]]; #h(1fr); #text(size:0.7em,fill:white)[#now/#end]; #v(-17pt) 
 #line(
   length: 30cm,
-  stroke: 4pt +red.darken(30%),
+  stroke: 4pt +red.darken(10%),
 )  #v(a*2.5em)
         
   ]
@@ -176,7 +176,7 @@
   align(center+horizon)[
     #set text(weight: 700, 2em, fill:white)
 //    #line(length:100%, stroke:3pt+default_color)
-    #box(stroke: (bottom: 8pt, top:0pt, left:0pt, right:0pt),outset:(bottom:.5em))[#text(fill:white)[#title]]
+    #box(stroke: (bottom: 0pt, top:0pt, left:0pt, right:0pt),outset:(bottom:.5em))[#text(fill:blue.lighten(70%))[#title]]
  //   #line(length:100%, stroke:3pt+default_color)
     #if title_notes !=none {footnote[#title_notes]}
     #v(1em, weak: true)
@@ -205,14 +205,14 @@
 //スライドのデザイン，タイトルスライドのデザイン，フッターのデザインをまとめる．
 
 #let Tropical-page-setter(footer:"",body) = {
-  set page(fill:gradient.linear(rgb("00008b"), yellow.darken(30%), angle: 0deg),footer: [#set text(10pt);#footer])
-  set text(fill: rgb("f5f5f5"))
+  set page(fill: red.darken(30%),footer: [#set text(10pt);#footer])
+  set text(fill: yellow.lighten(70%))
   body
 }
 
 //スライドのデザイン，タイトルスライドのデザイン，フッターのデザインをまとめる．
 
-#let Tropical = (slide_theme:Tropical-header_slide, title_theme:Tropical-title_slide, page_theme: Tropical-page-setter,default-color: yellow.darken(40%),emph-color:white)
+#let Tropical = (slide_theme:Tropical-header_slide, title_theme:Tropical-title_slide, page_theme: Tropical-page-setter,default-color: red.darken(50%),emph-color:yellow.lighten(50%))
 
 
 //------

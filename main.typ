@@ -197,9 +197,11 @@ conly((2),content("line.end", [Here], anchor: "east", padding: 0))
 = 参考
 
 #show link: underline
-
-- Polylux: another package for creating slides in Typst\
-  - https://typst.app/universe/package/polylux
+- other package for creating slides in Typst
+  - Polylux: 
+    - https://typst.app/universe/package/polylux
+  - Touying: 
+    - https://typst.app/universe/package/touying/
 
 - #link("https://www.dropbox.com/scl/fi/dz8s2hgp0amouck2apboe/Typst_start.pdf?rlkey=sxr40yzonwuily952jqweaov4&st=0a6zlk55&dl=0")[Typstの使い方]
 

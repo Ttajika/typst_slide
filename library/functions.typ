@@ -156,7 +156,7 @@ pad(
 //フッターのデザイン
 
 #let default-page-setter(footer:"",body) = {
-  set page(footer: footer)
+  set page(footer: footer, fill:white)
   body
 }
 
