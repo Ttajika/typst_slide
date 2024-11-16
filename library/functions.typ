@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.2.2"
+#import "@preview/cetz:0.3.1"
 #import "parameter.typ":*
 
 //カラーとフォントの設定. 
@@ -173,8 +173,11 @@ pad(
      let ss = ss_counter.get().at(0)
  
   align(left)[#par(first-line-indent: 0em)[
-      #rect(width: 100%, stroke: 6pt+frame_color.opacify(-ss * trans),outset: (x:0.4pt,y:9.6pt), inset: (x:10pt))[
-      #rect(width: 100%, fill: frame_color.opacify(-ss *trans), stroke: 0pt+frame_color.opacify(-ss *trans),outset:(x: 8.5pt, y: 12pt), inset: (y:-5pt))[#text(fill: emph_color.opacify(-ss *trans),weight:700)[
+      
+      #let fcolor = {if ss == 1{ frame_color.mix(page.fill) }else {frame_color}}
+      #let ecolor = {if ss == 1{ emph_color.mix(page.fill) }else {emph_color}}
+      #rect(width: 100%, stroke: 6pt+fcolor,outset: (x:0.4pt,y:9.6pt), inset: (x:10pt))[
+      #rect(width: 100%, fill: fcolor, stroke: 0pt+fcolor,outset:(x: 8.5pt, y: 12pt), inset: (y:-5pt))[#text(fill: ecolor,weight:700)[
       #title
       ]]
       #body]]]
@@ -452,29 +455,28 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
 
 
 
-#let up_cur_slide(mnumber) = {  
- let subslide = counter("subslide_counter")
+#let up_cur_slide(mnumber,n) = {
  let subslide_n = subslide.get().at(0)
  if subslide_n < mnumber {
     subslide.update(mnumber)
-}}
-  
+  }
+
+}
 
 // subslide.update(n=>max(n,calc.max(n,mnumber)))  
 
 
-#let conly(number, body, mode:none) = {
-    if type(number) == "integer" { cetz.draw.content((0,0),context{up_cur_slide(number)  })
+#let conly(number, body, mode:none,bounds:true) = {
+    if type(number) == "integer" { cetz.draw.content((0,0),context{up_cur_slide(number,subslide.get().at(0))  })
     }
     if type(number) == "array" {
-    let mnumber = {number.last()}
-    cetz.draw.content((0,0),context{up_cur_slide(mnumber) })
+    let mnumber = number.last()
+    cetz.draw.content((0,0),[#context{up_cur_slide(mnumber,subslide.get().at(0)) }  ])
     }
-    let visible =  {
-    let current_subslide = subslide_c.get().at(0)
+    let visible(current_subslide) =  {
     if type(number) == "integer" {
     if current_subslide == number {
-      1
+       1
     } else {0}
     } 
     if type(number) == "array" {
@@ -489,10 +491,12 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
     } else {0}
     }
   }
-    if visible == 1 {
-      cetz.draw.content((0,0),[ ])
+  let w = cetz
+   if visible(subslide_c.get().at(0)) == 1 {
+      cetz.draw.content((1,0),[]) //for debug
+    
        body
-    }
+    } else {cetz.draw.hide(body, bounds:bounds)}
      
     }
   

@@ -1,9 +1,9 @@
 //fontawesomeの読み込み
-#import "@preview/fontawesome:0.1.0": *
+#import "@preview/fontawesome:0.5.0": *
 //CeTZの読み込み
 #import "@preview/cetz:0.1.0"
 //
-#import "@preview/codly:0.2.0": *
+#import "@preview/codly:1.0.0": *
 
 
 #import "functions.typ": *

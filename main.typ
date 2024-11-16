@@ -1,4 +1,5 @@
 #import "library/slide_template.typ": *
+#import "@preview/cetz-plot:0.1.0": plot, chart
 
 #show "．" : "。"
 
@@ -120,7 +121,7 @@ F(x)= sum_(i =1 )^n f_i (x)
 $
 
 = code
-#import "@preview/codly:0.2.0": *
+#import "@preview/codly:1.0.0": *
 
 #let icon(codepoint) = {
   box(
@@ -133,9 +134,9 @@ $
 
 #show: codly-init.with()
 #codly(
-)
+zebra-fill: none)
 
-#text(fill:black)[
+#text(fill:white)[
 ```python
 def function(text):
   for i in range(10):
@@ -155,32 +156,25 @@ def function(text):
 
 #context[
 #columns[
-#cetz.canvas({import cetz.chart
-let data = (24, 31, 18, 21, 23, 18, 27, 17, 26, 13)
-let colors = gradient.linear(red, blue, green, yellow)
-chart.piechart(
-  data,
-  radius: 3.5,
-  slice-style: colors,
-  inner-radius: .5,
-  outer-label: (content: "%",))})
+
 
 //CeTZ Objectをdynamic slideにするときは次のようにする．
 // 1. contextで囲む
 // 2. 番号を指定してconlyで囲む. conly((指定番号), 内容)とする．
+
 #cetz.canvas(
 {
 import cetz.plot
 import cetz.draw: *
-conly((0,1,2),
-    plot.plot(size: (8,8), name: "plot",
+
+conly((0,1),
+    plot.plot(size: (8,8), name: "plot", plot-style:(stroke:3pt+white), axis-style: "left", mark-style:(stroke:3pt,fill:white),
           x-tick-step: none, y-tick-step: none, {
           plot.add(((0,0), (1,1), (2,.5), (4,3)))
           plot.add-anchor("pt", (1,1))
           }))
 conly((1,2),
-{line("plot.pt", ((), "-|", (0,1.5)), mark: (start: ">"), name: "line")
-line((0,0),(1,1),stroke:white+12pt)
+{line("plot.pt", ((), "-|", (0,1.5)), mark: (start: ">"), name: "line", stroke:white+8pt)
 }
 )
 conly((2),content("line.end", [Here], anchor: "east", padding: 0))
@@ -193,7 +187,11 @@ conly((2),content("line.end", [Here], anchor: "east", padding: 0))
 ]
 
 
-]]
+]
+]
+
+
+
 
 
 = 参考
