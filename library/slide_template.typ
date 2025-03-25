@@ -1,9 +1,8 @@
 //fontawesomeの読み込み
 #import "@preview/fontawesome:0.5.0": *
 //CeTZの読み込み
-#import "@preview/cetz:0.1.0"
+#import "@preview/cetz:0.3.4"
 //
-#import "@preview/codly:1.0.0": *
 
 
 #import "functions.typ": *
@@ -89,7 +88,7 @@ set heading(numbering: "1.1.")
 set footnote(numbering: "\*")
 
   context[#set heading(outlined: false)
-    #slide()[
+    #slide(title:none,level:2)[
     #theme.at("title_theme")(now:"",end:"", color:default_color,tcolor:emph_color, outline:header-outline, title:title, title_notes:title_notes, date:date, authors:authors, institutions:institutions)
   ]]
   counter(heading).update(0)

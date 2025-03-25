@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.3.1"
+#import "@preview/cetz:0.3.4"
 #import "parameter.typ":*
 
 //カラーとフォントの設定. 
@@ -173,11 +173,11 @@ pad(
      let ss = ss_counter.get().at(0)
  
   align(left)[#par(first-line-indent: 0em)[
-      
       #let fcolor = {if ss == 1{ frame_color.mix(page.fill) }else {frame_color}}
       #let ecolor = {if ss == 1{ emph_color.mix(page.fill) }else {emph_color}}
-      #rect(width: 100%, stroke: 6pt+fcolor,outset: (x:0.4pt,y:9.6pt), inset: (x:10pt))[
-      #rect(width: 100%, fill: fcolor, stroke: 0pt+fcolor,outset:(x: 8.5pt, y: 12pt), inset: (y:-5pt))[#text(fill: ecolor,weight:700)[
+      #box(width: 100%, stroke: 6pt+fcolor,outset: (x:0.4pt,y:9.6pt), inset: (x:10pt))[
+      #v(-.3em)
+      #box(width: 100%, fill: fcolor, stroke: 0pt+fcolor,outset:(x: 8.5pt, y: 8pt), inset: (y:-3pt))[#text(fill: ecolor,weight:700)[
       #title
       ]]
       #body]]]
@@ -425,7 +425,7 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
     context({
     let current_subslide = subslide_c.get().at(0)
     let subslide_n = subslide.get().at(0)
-    if type(number) == "integer" { 
+    if type(number) == int { 
     if current_subslide == number {
       body
     } else {showstyles(mode:mode,body)}
@@ -433,13 +433,13 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
     if subslide_n < number {
       subslide.update(number)
     }}} 
-    if type(number) == "array" {
+    if type(number) == array {
     let serch_num(nm) = {
       if nm == current_subslide {
         return true
       } else{return false}
     }
-     if type(number.find(serch_num))== "integer" {
+     if type(number.find(serch_num))== int {
       body
     } else {[#showstyles(mode:mode,body)]}
     let mnumber = {number.last()}
@@ -467,14 +467,14 @@ theorem_base(title: title, kind: "Assumption", frame_color:default_color, tlabel
 
 
 #let conly(number, body, mode:none,bounds:true) = {
-    if type(number) == "integer" { cetz.draw.content((0,0),context{up_cur_slide(number,subslide.get().at(0))  })
+    if type(number) == int { cetz.draw.content((0,0),context{up_cur_slide(number,subslide.get().at(0))  })
     }
-    if type(number) == "array" {
+    if type(number) == array {
     let mnumber = number.last()
     cetz.draw.content((0,0),[#context{up_cur_slide(mnumber,subslide.get().at(0)) }  ])
     }
     let visible(current_subslide) =  {
-    if type(number) == "integer" {
+    if type(number) == int {
     if current_subslide == number {
        1
     } else {0}

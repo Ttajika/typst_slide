@@ -10,10 +10,10 @@ institutions: ("Nihon University",), //所属
 math-font:"Fira Math", //数式フォント
 size:24pt,
 header-outline:true, //headingにアウトラインの表示(level1のみ)
-header-number:false, //節番号を見出しに表示
+header-number:true, //節番号を見出しに表示
 //footer: [#table(columns:(1fr,1fr), stroke: (top:.1em+white,bottom:0em,left:0em, right:0em), [Authors Name],[Short Title])],
 header-numbering_inf:2,
-theme: BlackBoard
+theme: BlackBoard,
 //margin:(right:20pt,top:10pt, left:20pt, bottom:10pt)
 )
 //Themeはいまのところ， BlackBoard, default-theme, Simple, Tropical
@@ -120,30 +120,6 @@ a x^2+2b x+c\
 F(x)= sum_(i =1 )^n f_i (x)
 $
 
-= code
-#import "@preview/codly:1.0.0": *
-
-#let icon(codepoint) = {
-  box(
-    height: 0.8em,
-    baseline: 0.05em,
-    image(codepoint)
-  )
-  h(0.1em)
-}
-
-#show: codly-init.with()
-#codly(
-zebra-fill: none)
-
-#text(fill:white)[
-```python
-def function(text):
-  for i in range(10):
-        print(i)
-  return(str(i+1)+"abc"+text)      
-```
-]
 
 
 
@@ -162,24 +138,7 @@ def function(text):
 // 1. contextで囲む
 // 2. 番号を指定してconlyで囲む. conly((指定番号), 内容)とする．
 
-#cetz.canvas(
-{
-import cetz.plot
-import cetz.draw: *
 
-conly((0,1),
-    plot.plot(size: (8,8), name: "plot", plot-style:(stroke:3pt+white), axis-style: "left", mark-style:(stroke:3pt,fill:white),
-          x-tick-step: none, y-tick-step: none, {
-          plot.add(((0,0), (1,1), (2,.5), (4,3)))
-          plot.add-anchor("pt", (1,1))
-          }))
-conly((1,2),
-{line("plot.pt", ((), "-|", (0,1.5)), mark: (start: ">"), name: "line", stroke:white+8pt)
-}
-)
-conly((2),content("line.end", [Here], anchor: "east", padding: 0))
-
-})
 
 
 
