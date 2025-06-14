@@ -1,0 +1,13 @@
+[package]
+name = "tjkslides"
+version = "0.1.0"
+entrypoint = "main.typ"
+categories = [ "presentation" ]
+disciplines = [ "economics" ]
+compiler = "0.13.1"
+description = "A simple slide template for an academic presentation."
+
+[template]
+path = "library"
+entrypoint = "slide_template.typ"
+thumbnail = ""
